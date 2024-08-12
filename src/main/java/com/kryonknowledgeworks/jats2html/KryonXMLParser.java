@@ -28,9 +28,9 @@ public class KryonXMLParser {
 
     public static void main(String[] args){
 
-        parse("C:\\Users\\TK-SDK\\Documents\\jobnest\\xml\\ijssis-2023-0001.xml",
-                "C:\\Users\\TK-SDK\\Documents\\jobnest\\out\\ijssis-2023-0001.html",true);
-//        mapParser("C:\\Users\\TK-SDK\\Documents\\jobnest\\xml\\ijssis-2023-0001.xml",true);
+//        parse("C:\\Users\\TK-SDK\\Documents\\jobnest\\xml\\ijssis-2023-0001.xml",
+//                "C:\\Users\\TK-SDK\\Documents\\jobnest\\out\\ijssis-2023-0001.html",true);
+        mapParser("D:\\all-xml-files-zipped\\xml_list\\amns.2021.6.issue-2\\amns.2021.1.00037\\amns.2021.1.00037.xml",false);
     }
 
    public static String parse(String relativeFilePath,String outputFilePath,Boolean enableDebugMode){

@@ -19,6 +19,7 @@ public class MapBuilder {
     public Map<String,Object> buildMap(){
         Article article = new Article(document.getDocumentElement());
         article.getMapXML();
+        System.out.println(XMLmap);
          return XMLmap;
     }
 

@@ -46,7 +46,7 @@ public class ClassNameSingleTon {
                 }
             }
         } else {
-            List<String> files = listFilesFromJar("com/kjms/xmlparser/elements");
+            List<String> files = listFilesFromJar("src/main/java/com/kryonknowledgeworks/jats2html/elements");
             for (String file : files) {
                 classNames.add(classNameToTag(file));
             }
@@ -158,7 +158,7 @@ public class ClassNameSingleTon {
 
     public static Object createInstanceFromClassNameForMap(String className, Object... constructorParams)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Class<?> clazz = Class.forName("com.kjms.xmlparser.front.element." + className);
+        Class<?> clazz = Class.forName("com.kryonknowledgeworks.jats2html.front.element." + className);
 
         // Find the constructor with matching parameter types
         Class<?>[] parameterTypes = new Class[constructorParams.length];
@@ -177,7 +177,7 @@ public class ClassNameSingleTon {
 
 
     public static Boolean isImplement(String className) throws ClassNotFoundException {
-        Class<?> clazz = Class.forName("com.kjms.xmlparser.elements." + className);
+        Class<?> clazz = Class.forName("com.kryonknowledgeworks.jats2html.elements." + className);
 
         try {
             Field field = clazz.getDeclaredField("IMPLEMENT");
@@ -192,7 +192,7 @@ public class ClassNameSingleTon {
     }
 
     public static Boolean isImplementForMap(String className) throws ClassNotFoundException {
-        Class<?> clazz = Class.forName("com.kjms.xmlparser.front.element." + className);
+        Class<?> clazz = Class.forName("com.kryonknowledgeworks.jats2html.front.element." + className);
 
         try {
             Field field = clazz.getDeclaredField("IMPLEMENT");
