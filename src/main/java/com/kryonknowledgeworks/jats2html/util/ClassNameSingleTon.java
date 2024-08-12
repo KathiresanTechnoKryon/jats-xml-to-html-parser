@@ -1,6 +1,6 @@
 package com.kryonknowledgeworks.jats2html.util;
 
-import com.kjms.xmlparser.KryonXMLParser;
+import com.kryonknowledgeworks.jats2html.KryonXMLParser;
 import org.w3c.dom.Node;
 
 import java.io.*;
@@ -26,7 +26,7 @@ public class ClassNameSingleTon {
 
     private ClassNameSingleTon() {
         tagNames = getTagNamesFromFolder(Constants.ELEMENTS_PATH);
-        tagNamesMap = getTagNamesFromFolder(Constants.FRONT_ELEMENTS_PATH);
+        tagNamesMap = getTagNamesFromFrontFolder(Constants.FRONT_ELEMENTS_PATH);
     }
 
     public static synchronized ClassNameSingleTon getInstance() {
@@ -48,14 +48,36 @@ public class ClassNameSingleTon {
                 }
             }
         } else {
-            List<String> files = listFilesFromJar("src/main/java/com/kryonknowledgeworks/jats2html/elements");
+            List<String> files = listFilesFromJar("com/kryonknowledgeworks/jats2html/elements");
             for (String file : files) {
                 classNames.add(classNameToTag(file));
             }
         }
 
-        System.out.println("classNames");
-        System.out.println(classNames);
+
+
+        return classNames;
+    }
+
+    private List<String> getTagNamesFromFrontFolder(String folderPath) {
+        List<String> classNames = new ArrayList<>();
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            List<File> files = listFiles(folder);
+            for (File file : files) {
+                if (file.getName().endsWith(".java")) {
+                    classNames.add(classNameToTagFront(file.getName().replace(".java", "")));
+                }
+            }
+        } else {
+            List<String> files = listFilesFromJar("com/kryonknowledgeworks/jats2html/front/element");
+            for (String file : files) {
+                classNames.add(classNameToTagFront(file));
+            }
+        }
+
+
 
         return classNames;
     }
@@ -159,7 +181,7 @@ public class ClassNameSingleTon {
 
     public static Object createInstanceFromClassName(String className, Object... constructorParams)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Class<?> clazz = Class.forName("com.kjms.xmlparser.elements." + className);
+        Class<?> clazz = Class.forName("com.kryonknowledgeworks.jats2html.elements." + className);
 
         // Find the constructor with matching parameter types
         Class<?>[] parameterTypes = new Class[constructorParams.length];
@@ -302,7 +324,27 @@ public class ClassNameSingleTon {
 
     public static String classNameToTag(String className) {
 
-        className = className.replace("com/kjms/xmlparser/elements/", "").replace(".class", "");
+        className = className.replace("com/kryonknowledgeworks/jats2html/elements/", "").replace(".class", "");
+
+        StringBuilder result = new StringBuilder();
+        result.append(Character.toLowerCase(className.charAt(0))); // Convert the first character to lowercase
+
+        for (int i = 1; i < className.length(); i++) {
+            char c = className.charAt(i);
+            if (Character.isUpperCase(c)) {
+                result.append('-'); // Add hyphen before the uppercase letter
+                result.append(Character.toLowerCase(c)); // Convert the uppercase letter to lowercase
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
+    public static String classNameToTagFront(String className) {
+
+        className = className.replace("com/kryonknowledgeworks/jats2html/front/element/", "").replace(".class", "");
 
         StringBuilder result = new StringBuilder();
         result.append(Character.toLowerCase(className.charAt(0))); // Convert the first character to lowercase
